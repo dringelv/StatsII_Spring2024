@@ -1,7 +1,7 @@
 library(tidyverse)
 library(stargazer)
 
-data <- read_csv("Trajche's desktop file path", 
+data <- read_csv("C:/Users/dring/Documents/GitHub/StatsII_Spring2024/tutorials/tutorial01/45929c39-da6c-47e6-9814-1b73419c7d88_Data.csv", 
                  col_types = cols(
                    `Ease of doing business rank (1=most business-friendly regulations) [IC.BUS.EASE.XQ]` = col_double(),
                    `Tax revenue (% of GDP) [GC.TAX.TOTL.GD.ZS]` = col_double(),
@@ -49,7 +49,7 @@ formula <- `GDP per capita (current US$)` ~ `Tax revenue (% of GDP)` + `Ease of 
 reg <- lm(formula, data)
 
 summary(reg)
-
+stargazer(reg)
 data %>%
   ggplot(aes(`Tax revenue (% of GDP)`, 
              `GDP per capita (current US$)`, 

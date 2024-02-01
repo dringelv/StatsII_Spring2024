@@ -53,7 +53,7 @@ library(stargazer)
 # open the data file we just imported using "import dataset...". In the window that 
 # opens, you'll notice we can manually change the type of data for each column...
 
-data <- 
+data <- read.csv("C:/Users/dring/Documents/GitHub/StatsII_Spring2024/tutorials/tutorial01/45929c39-da6c-47e6-9814-1b73419c7d88_Data.csv")
 
 #### Wrangling the data
 # We should now have a dataset where our variables are at least of the correct type.
@@ -67,7 +67,9 @@ data <-
 # We only have one year, so the two cols related to year can be dropped; also, we only
 # really need one col for country name, so let's drop country code too.
   
+
 # 3. Let's also get rid of the variable code in square brackets
+
 
 names(data) <- #hint: try using the function sub() with the regexp " \\[.*"
   
@@ -77,6 +79,9 @@ names(data) <- #hint: try using the function sub() with the regexp " \\[.*"
 # 1. Let's perform some preliminary descriptive analysis using our visualisation skills.
 #    Try using ggplot to create a plot of scatter showing GDP p/c vs Tax revenue. Add a
 #    simple linear regression line.
+  
+data %>%
+  ggplot(aes("Tax"))
   
 # 2. Now let's try the same using GDP p/c vs Ease of Doing Business.
 
