@@ -27,10 +27,11 @@ pkgTest <- function(pkg){
 # ex: stringr
 # lapply(c("stringr"),  pkgTest)
 
-lapply(c(),  pkgTest)
+lapply(c('ggplot2'),  pkgTest)
 
 # set wd for current folder
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
+getwd()
 
 ## Binary logits:
 
@@ -48,17 +49,58 @@ setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 # nsibs: Number of siblings
 # intact: Whether the respondent lived with both biological parents at age 14 (Yes or No)
 
-graduation <- read.table("http://statmath.wu.ac.at/courses/StatsWithR/Powers.txt")
+graduation <- read.table("http://statmath.wu.ac.at/courses/StatsWithR/Powers.txt",
+                         stringsAsFactors = TRUE)
+
+summary(graduation)
+
+#drop problematic cases
+graduation <- graduation[-which(graduation$nsibs < 0),]
 
 # (a) Perform a logistic regression of hsgrad on the other variables in the data set.
 # Compute a likelihood-ratio test of the omnibus null hypothesis that none of the explanatory variables influences high-school graduation. 
 # Then construct 95-percent confidence intervals for the coefficients of the seven explanatory variables. 
 # What conclusions can you draw from these results? Finally, offer two brief, but concrete, interpretations of each of the estimated coefficients of income and intact.
+mod <- glm(hsgrad ~ .,
+           data = graduation,
+           family = binomial(link = "logit"))
 
-# (b) The logistic regression in the previous problem assumes that the partial relationship between the log-odds of high-school graduation and number of siblings is linear. 
-# Test for nonlinearity by fitting a model that treats nsibs as a factor, performing an appropriate likelihood-ratio test. 
+summary(mod)
+
+nullmod <- glm(hsgrad ~ 1, #we only use the intercept
+               data = graduation,
+               family = "binomial")
+summary(nullmod)
+
+anova(nullmod, mod, test = "Chisq")
+anova(nullmod, mod, test = "LRT") #likelihood ratio test is a type of Chisq test
+                                  # so they return the same results
+
+?confint
+
+exp(confint(mod))
+
+confMod <- data.frame(cbind(lower = exp(confint(mod)[,1]), 
+                            coefs = exp(coef(mod)), 
+                            upper = exp(confint(mod)[,2])))
+
+ggplot(data = confMod, mapping = aes(x = row.names(confMod), y = coefs)) +
+  geom_point() +
+  geom_errorbar(aes(ymin = lower, ymax = upper), colour = "red") + 
+  coord_flip() +
+  labs(x = "Terms", y = "Coefficients")
+
+# (b) The logistic regression in the previous problem assumes that the partial 
+# relationship between the log-odds of high-school graduation and number of siblings is linear. 
+# Test for nonlinearity by fitting a model that treats nsibs as a factor, 
+# performing an appropriate likelihood-ratio test. 
 # In the course of working this problem, you should discover an issue in the data. 
 # Deal with the issue in a reasonable manner. 
 # Does the result of the test change?
 
+?model.matrix
+
+model.matrix( ~ unique(nsibs), data = graduation)
+
+model.matrix( ~ as.factor(unique(nsibs)), data = graduation)
 
