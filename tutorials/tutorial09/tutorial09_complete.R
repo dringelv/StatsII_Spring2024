@@ -18,7 +18,7 @@ str(long_data)
 summary(long_data)
 
 with(long_data,
-     list(mean(art), var(art))) # do we meet assumptions for Poisson?
+     list(mean(art), var(art))) # do we meet assumptions for Poisson? mean and variance should be the same
      
 # a) Examine distribution of response variable
 hist(long_data$art)
@@ -33,7 +33,7 @@ summary(mod.lm)
 mod2.lm <- lm(art ~ fem * ., data = long_data) # interaction effects with gender?
 summary(mod2.lm)
 
-# Do we meet assumptions?
+# Do we meet assumptions? Should be normally distributed
 plot(predict(mod2.lm), abs(resid(mod2.lm)), xlab = "Predicted", ylab = "Absolute Residuals")
 
 sresid <- rstandard(mod2.lm) # distribution of standardised residuals

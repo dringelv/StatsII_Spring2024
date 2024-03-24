@@ -27,7 +27,7 @@ pkgTest <- function(pkg){
 # ex: stringr
 # lapply(c("stringr"),  pkgTest)
 
-lapply(c("nnet", "MASS"),  pkgTest)
+lapply(c("nnet", "MASS", "stargazer"),  pkgTest)
 
 # set wd for current folder
 setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
@@ -44,7 +44,7 @@ gdp_data <- read.csv("https://raw.githubusercontent.com/ASDS-TCD/StatsII_Spring2
 
 summary(gdp_data)
 
-breaks <- c(-Inf, -0.000001, 0, Inf)  # We're defining two intervals: (-Inf, 0] and (0, Inf)
+breaks <- c(-Inf, -0.000001, 0, Inf)
 
 # Define labels for the intervals
 labels <- c("negative","no change", "positive")
@@ -64,11 +64,15 @@ multinom_model1 <- multinom(GDPWdiff_cat ~ REG + OIL, data = gdp_data)
 summary(multinom_model1)
 exp(coef(multinom_model1))
 
+stargazer(multinom_model1)
+
 ### Question 2
 
 polr_model1 <- polr(GDPWdiff_cat ~ REG + OIL, data = gdp_data, Hess= TRUE)
 summary(polr_model1)
 exp(coef(polr_model1))
+
+stargazer(polr_model1)
 
 #####################
 # Problem 2
@@ -81,3 +85,12 @@ mexico_elections <- read.csv("https://raw.githubusercontent.com/ASDS-TCD/StatsII
 
 poisson_model1 <- glm(PAN.visits.06 ~ competitive.district + marginality.06 + PAN.governor.06, data = mexico_elections, family = poisson)
 summary(poisson_model1)
+
+stargazer(poisson_model1)
+
+exp(-2.080)
+exp(-0.312)
+
+
+lambda <- exp(-3.81023+(-0.08135)*1+(-2.08014)*0+(-0.31158)*1) 
+lambda
