@@ -1,7 +1,9 @@
-data <- read.csv("data/long97.csv")
+data <- read.csv("long97.csv")
 
 with(data,
      hist(job))
+summary(data)
+view(data)
 
 # OLS on original data
 summary(m1 <- lm(job ~ ., data[,-2])) # effect of being a woman is negative
@@ -14,3 +16,4 @@ summary(m3 <- lm(jobcen ~ ., data = data[data$jobcen > 1, -1])) # effect of bein
 
 # Tobit 
 summary(m.tobit <- vglm(job ~ ., tobit(Lower = 1), data[,-2])) # effect of being a woman is significant and negative
+# normal intercept and intercept for the log-standard deviation of the latent variable

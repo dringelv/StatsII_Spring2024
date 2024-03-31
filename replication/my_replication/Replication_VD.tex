@@ -1,0 +1,322 @@
+\documentclass[12pt,letterpaper]{article}
+\usepackage{graphicx,textcomp}
+\usepackage{natbib}
+\usepackage{setspace}
+\usepackage{fullpage}
+\usepackage{color}
+\usepackage[reqno]{amsmath}
+\usepackage{amsthm}
+\usepackage{fancyvrb}
+\usepackage{amssymb,enumerate}
+\usepackage[all]{xy}
+\usepackage{endnotes}
+\usepackage{lscape}
+\newtheorem{com}{Comment}
+\usepackage{float}
+\usepackage{hyperref}
+\newtheorem{lem} {Lemma}
+\newtheorem{prop}{Proposition}
+\newtheorem{thm}{Theorem}
+\newtheorem{defn}{Definition}
+\newtheorem{cor}{Corollary}
+\newtheorem{obs}{Observation}
+\usepackage[compact]{titlesec}
+\usepackage{dcolumn}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usepackage{multirow}
+\usepackage{xcolor}
+\newcolumntype{.}{D{.}{.}{-1}}
+\newcolumntype{d}[1]{D{.}{.}{#1}}
+\definecolor{light-gray}{gray}{0.65}
+\usepackage{url}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{booktabs}
+\usepackage[para,online,flushleft]{threeparttable}
+\usepackage{makecell}
+\usepackage{adjustbox}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+	backgroundcolor=\color{backcolour},   
+	commentstyle=\color{codegreen},
+	keywordstyle=\color{magenta},
+	numberstyle=\tiny\color{codegray},
+	stringstyle=\color{codepurple},
+	basicstyle=\footnotesize,
+	breakatwhitespace=false,         
+	breaklines=true,                 
+	captionpos=b,                    
+	keepspaces=true,                 
+	numbers=left,                    
+	numbersep=5pt,                  
+	showspaces=false,                
+	showstringspaces=false,
+	showtabs=false,                  
+	tabsize=2
+}
+\lstset{style=mystyle}
+\newcommand{\Sref}[1]{Section~\ref{#1}}
+\newtheorem{hyp}{Hypothesis}
+
+
+%opening
+\title{Replication: The Importance of Breaking Even: How Local and
+	Aggregate Returns Make Politically Feasible Policies}
+\author{Vismante Dringelyte\\
+17341481}
+
+\begin{document}
+
+\maketitle
+\section{How do policy outcomes impact voter support?}
+Past research suggests that when incumbents fail to introduce policy which produces enough distributive spending for their constituents are punished by voters. There is also tension between local and aggregate benefits of policy. Other researched has not provided insights into the voters' trade-off of local and aggregate interests. That is the focus of this study.
+
+\section{Why?}
+Legislators operate under pressure to provide benefits to their constituents and the general public. Voters in turn may prioritise constituent benefits over universal ones. This may discourage legislators from enacting policy which would bring net improvements in favour of more locally focused policies.
+
+\section{Hypothesis}
+The authors provide the hypothesis that incumbents that support aggregate benefits will experience a discontinuous increase in support around the local break-even threshold, as voters move from being opposed to losses to minimising gains when they see net-zero returns.
+
+\section{Data}
+	\lstinputlisting[language=R, firstline=13,lastline=16]{02_maintables-figures.R} 
+
+\textbf{Independent variable:} city and district returns. 
+
+\textbf{Dependent variable:} incumbent evaluations, vote choice, and project evaluations.
+
+\newpage
+\textbf{Assumptions:}
+\begin{itemize}
+	\item Independence of observations.
+	\item Homoscedasticity: the variance of residuals in constant across all levels of independent variables.
+	\item Normally distributed residuals.
+\end{itemize}
+
+
+\section{Results}
+\textbf{Figure 1}
+
+\includegraphics[width=\textwidth]{output/3categorycity}
+
+The figure shows the mean incumbent evaluations by district per capita returns, categorised by net city returns. It shows a break in linearity around the breaking even point for district returns.
+
+\newpage
+\textbf{Table 1}
+	\lstinputlisting[language=R, firstline=28,lastline=39]{02_maintables-figures.R} 
+
+\renewcommand{\baselinestretch}{0.75}%
+
+\begin{table}[H]
+	\caption{Effect of District and City-Wide Returns on 
+		Evaluations, Experiment 1}
+	\begin{center}
+		\scalebox{1}{
+			\begin{threeparttable}
+				\begin{tabular}{l c c c}
+					\toprule
+					& \makecell{Incumbent\\Evaluations\\(-1 to 1)} & \makecell{Vote for Incumbent\\vs. Challenger\\(-1 to 1)} & \makecell{Project\\Evaluation\\(-1 to 1)} \\
+					\midrule
+					District At Least Breaks Even (District $\geq 0$) & $0.204^{***}$  & $0.105^{*}$  & $0.191^{***}$  \\
+					& $(0.056)$      & $(0.051)$    & $(0.056)$      \\
+					District Benefits (District $>$ 0)              & $0.044$        & $0.059$      & $0.026$        \\
+					& $(0.056)$      & $(0.048)$    & $(0.057)$      \\
+					District Returns Per Capita                     & $0.003^{***}$  & $0.003^{**}$ & $0.003^{**}$   \\
+					& $(0.001)$      & $(0.001)$    & $(0.001)$      \\
+					District Worse Off than City                    & $-0.028$       & $-0.023$     & $-0.003$       \\
+					& $(0.052)$      & $(0.050)$    & $(0.056)$      \\
+					City At Least Breaks Even (City $\geq 0$)         & $0.179^{*}$    & $0.125$      & $0.218^{**}$   \\
+					& $(0.076)$      & $(0.073)$    & $(0.076)$      \\
+					City Benefits (City $>$ 0)                      & $0.015$        & $0.052$      & $0.067$        \\
+					& $(0.076)$      & $(0.072)$    & $(0.075)$      \\
+					City Returns Per Capita                         & $0.004^{***}$  & $0.002^{*}$  & $0.003^{**}$   \\
+					& $(0.001)$      & $(0.001)$    & $(0.001)$      \\
+					Vignette 2                                      & $-0.107^{***}$ & $-0.014$     & $-0.107^{***}$ \\
+					& $(0.031)$      & $(0.029)$    & $(0.032)$      \\
+					Vignette 3                                      & $-0.060^{*}$   & $-0.004$     & $-0.062^{*}$   \\
+					& $(0.030)$      & $(0.028)$    & $(0.030)$      \\
+					Constant                                        & $-0.036$       & $-0.023$     & $-0.070$       \\
+					& $(0.048)$      & $(0.046)$    & $(0.050)$      \\
+					\midrule
+					R$^2$                                           & $0.166$        & $0.102$      & $0.161$        \\
+					Observations                                    & $1487$         & $1487$       & $1487$         \\
+					Respondents                                     & $496$          & $496$        & $496$          \\
+					\bottomrule
+				\end{tabular}
+				\begin{tablenotes}[flushleft]
+					\scriptsize{\item[\hspace{-5mm}] $^{***}p<0.001$; $^{**}p<0.01$; $^{*}p<0.05$. \item[\hspace{-5mm}] Dependent variables are listed in each column. 
+						Models estimated using ordinary least squares regression, with standard errors clustered by respondent.}
+				\end{tablenotes}
+			\end{threeparttable}
+		}
+		\label{tab:table1}
+	\end{center}
+\end{table}
+\newpage
+This table shows the effects of local and citywide returns on evaluations. The results around the breaking even point confirm what was shown in the graphic visualisation. The district at least breaking even is expected to improve the evaluation of the incumbent, willingness to vote for the incumbent and the evaluation of the project. These results are also statistically significant at p<0.05. The effect of doing better than breaking even is also positive but smaller and is not statistically significant.\\
+
+\textbf{Table 2}
+
+	\lstinputlisting[language=R, firstline=109,lastline=112]{03_appendixtables-figures.R} 
+
+\renewcommand{\baselinestretch}{0.75}%
+\begin{table}[H]
+	\centering
+	\begin{adjustbox}{width=\textwidth}
+	\begin{threeparttable}
+		\caption{Simulated Electoral Trade-offs from Side Payoffs 
+			when City-Wide Per Capita Returns are \$1, Experiment 1}
+		\centering
+		\begin{tabular}[t]{llcc}
+			\toprule
+			\multicolumn{1}{c}{} & \multicolumn{1}{c}{Initial Losing Coalition (4 -- 6)} & \multicolumn{2}{c}{New Winning Coalitions (6 -- 4 and 10 -- 0)} \\
+			\cmidrule(l{3pt}r{3pt}){2-2} \cmidrule(l{3pt}r{3pt}){3-4}
+			& \makecell{4 Winners\\0 Break Even\\6 Losers} & \makecell{4 Winners\\2 Break Even\\4 Losers} & \makecell{4 Winners\\6 Break Even\\0 Losers}\\
+			\midrule
+			Support in Winning Districts & 65.79 & 65.72 & 65.59\\
+			Support in Break Even Districts & N/A & 57.17 & 57.17\\
+			Support in Losing Districts & 32.79 & 57.17 & N/A\\
+			\bottomrule
+		\end{tabular}
+		\begin{tablenotes}[flushleft]
+			\scriptsize
+			\item[\hspace{-5mm}] \textit{Note:} This table presents the predicted electoral outcomes estimated from Table A2. We assume a 10-district city passes a policy that has a per capita net return of \$1 to the city as a whole. By type (winning, break even, losing), all districts are assumed to have the same net return. Districts that come out behind have a per capita net return of $-$\$1. In column 1, we present the vote share in which 4 districts come out ahead with a per capita net return of \$4. In column 2, the 4 councillors from the winning districts provide payoffs to 2 losing districts so that they reach a per capita return of \$0, to create a minimum winning coalition of 6. In column 3, the councillors provide payoffs to 6 losing districts to create a universal coalition of 10.
+		\end{tablenotes}
+	\end{threeparttable}}
+    \end{adjustbox}
+\end{table}
+\renewcommand{\baselinestretch}{1.67}%
+
+
+\newpage
+\textbf{Table 3}
+
+	\lstinputlisting[language=R, firstline=69,lastline=87]{02_maintables-figures.R} 
+
+\renewcommand{\baselinestretch}{1.67}%
+
+\begin{table}[H]
+	\caption{Effect of Challenger Criticisms on Evaluations, Experiment 2}
+	\begin{center}
+		\scalebox{0.82}{
+			\begin{threeparttable}
+				\begin{tabular}{l c c c c}
+					\toprule
+					& \makecell{Project\\Evaluation\\(0 to 100)} & \makecell{Approval of\\Project\\(1 to 5)} & \makecell{Incumbent\\Evaluation\\(0 to 100)} & \makecell{Vote for Incumbent\\vs. Challenger\\(1 to 5)} \\
+					\midrule
+					District At Least Breaks Even (District $\geq 0$) & $3.137^{*}$    & $0.212^{***}$ & $3.489^{**}$   & $0.269^{***}$ \\
+				& $(1.272)$      & $(0.060)$     & $(1.279)$      & $(0.053)$     \\
+				District Benefits (District $>$ 0)               & $-0.954$       & $-0.049$      & $-0.550$       & $-0.030$      \\
+				& $(1.339)$      & $(0.064)$     & $(1.351)$      & $(0.056)$     \\
+				District Returns Per Capita                      & $0.878^{*}$    & $0.025$       & $0.806^{*}$    & $0.033^{*}$   \\
+				& $(0.364)$      & $(0.017)$     & $(0.361)$      & $(0.016)$     \\
+				District Worse Off than City                     & $-4.250^{**}$  & $-0.168^{*}$  & $-3.938^{*}$   & $-0.172^{**}$ \\
+				& $(1.560)$      & $(0.074)$     & $(1.552)$      & $(0.066)$     \\
+				City Returns Per Capita                          & $0.706^{**}$   & $0.032^{**}$  & $0.228$        & $0.013$       \\
+				& $(0.252)$      & $(0.012)$     & $(0.255)$      & $(0.011)$     \\
+				Second Sample                                    & $-0.877$       & $-0.007$      & $-0.475$       & $-0.000$      \\
+				& $(0.771)$      & $(0.037)$     & $(0.777)$      & $(0.033)$     \\
+				Generic Critique                                 & $-0.648$       & $0.029$       & $-0.391$       & $0.010$       \\
+				& $(1.179)$      & $(0.056)$     & $(1.178)$      & $(0.049)$     \\
+				District Performance Critique (Not Germane)      & $-2.684^{*}$   & $-0.071$      & $-0.982$       & $0.057$       \\
+				& $(1.334)$      & $(0.063)$     & $(1.336)$      & $(0.054)$     \\
+				District Performance Critique (Germane)          & $-2.667$       & $-0.142$      & $-1.534$       & $0.128$       \\
+				& $(1.781)$      & $(0.082)$     & $(1.744)$      & $(0.071)$     \\
+				Fairness Critique (Not Germane)                  & $-2.639$       & $-0.085$      & $-1.845$       & $-0.104$      \\
+				& $(1.643)$      & $(0.077)$     & $(1.677)$      & $(0.072)$     \\
+				Fairness Critique (Germane)                      & $-3.520^{**}$  & $-0.123$      & $-3.062^{*}$   & $0.004$       \\
+				& $(1.354)$      & $(0.064)$     & $(1.371)$      & $(0.056)$     \\
+				Constant                                         & $65.200^{***}$ & $3.471^{***}$ & $62.969^{***}$ & $3.276^{***}$ \\
+				& $(2.209)$      & $(0.103)$     & $(2.209)$      & $(0.093)$     \\
+				\midrule
+				R$^2$                                            & $0.031$        & $0.029$       & $0.031$        & $0.037$       \\
+				Observations                                     & $4012$         & $4012$        & $4012$         & $4012$        \\
+				\bottomrule
+			\end{tabular}
+			\begin{tablenotes}[flushleft]
+				\scriptsize{\item[\hspace{-5mm}] $^{***}p<0.001$; $^{**}p<0.01$; $^{*}p<0.05$. \item[\hspace{-5mm}] Dependent variables are listed in each column. Models estimated using ordinary least squares regression, 
+					with standard errors clustered by respondent.}
+			\end{tablenotes}
+		\end{threeparttable}
+	}
+	\label{tab:table3}
+\end{center}
+\end{table}
+
+\renewcommand{\baselinestretch}{1.67}%
+
+This Table shows the results from the second experiment where challenger criticisms were also presented to the respondents. This showed similar results to the previous experiment.
+
+\section{"Twist"}
+To test whether assumptions were violated, I checked for heteroscedasticity. The graph shows that while there is no heteroscedasticity, the residuals do form 5 distinct lines, likely for the 5 categories of responses. Because of this, I decided to run an Ordinal Logistic Regression to see if it gave different results. These can be seen in the table below. 
+
+As we can see, the OLR provides similar results. This shows that the model is quite robust.
+
+\includegraphics[width= \textwidth]{output/residuals_v_predval}
+
+	\lstinputlisting[language=R, firstline=437,lastline=440]{Replication_VD.R}
+	\newpage 
+	\lstinputlisting[language=R, firstline=458,lastline=461]{Replication_VD.R} 	\lstinputlisting[language=R, firstline=480,lastline=483]{Replication_VD.R} 
+
+
+% Table created by stargazer v.5.2.3 by Marek Hlavac, Social Policy Institute. E-mail: marek.hlavac at gmail.com
+% Date and time: Sun, Mar 31, 2024 - 21:18:12
+\begin{table}[h!] \centering 
+	\caption{} 
+	\label{} 
+	\begin{tabular}{@{\extracolsep{5pt}}lccc} 
+		\\[-1.8ex]\hline 
+		\hline \\[-1.8ex] 
+		& \multicolumn{3}{c}{\textit{Dependent variable:}} \\ 
+		\cline{2-4} 
+		\\[-1.8ex] & eval\_incumbent & vote & eval\_project \\ 
+		\\[-1.8ex] & (1) & (2) & (3)\\ 
+		\hline \\[-1.8ex] 
+		distatorabovezero & 0.609$^{***}$ & 0.370$^{**}$ & 0.584$^{***}$ \\ 
+		& (0.162) & (0.161) & (0.162) \\ 
+		& & & \\ 
+		distabovezero & 0.102 & 0.174 & 0.032 \\ 
+		& (0.161) & (0.159) & (0.160) \\ 
+		& & & \\ 
+		cityatorabovezero & 0.545$^{**}$ & 0.449$^{*}$ & 0.683$^{***}$ \\ 
+		& (0.236) & (0.239) & (0.234) \\ 
+		& & & \\ 
+		cityabovezero & 0.009 & 0.097 & 0.126 \\ 
+		& (0.236) & (0.239) & (0.233) \\ 
+		& & & \\ 
+		distworsecity & $-$0.082 & $-$0.044 & $-$0.020 \\ 
+		& (0.160) & (0.159) & (0.162) \\ 
+		& & & \\ 
+		city\_pc & 0.013$^{***}$ & 0.008$^{**}$ & 0.010$^{***}$ \\ 
+		& (0.003) & (0.003) & (0.003) \\ 
+		& & & \\ 
+		dist\_pc & 0.011$^{***}$ & 0.009$^{***}$ & 0.010$^{***}$ \\ 
+		& (0.003) & (0.003) & (0.003) \\ 
+		& & & \\ 
+		task2 & $-$0.297$^{***}$ & $-$0.010 & $-$0.271$^{**}$ \\ 
+		& (0.114) & (0.114) & (0.114) \\ 
+		& & & \\ 
+		task3 & $-$0.159 & 0.026 & $-$0.142 \\ 
+		& (0.115) & (0.115) & (0.114) \\ 
+		& & & \\ 
+		\hline \\[-1.8ex] 
+		Observations & 1,487 & 1,487 & 1,487 \\ 
+		\hline 
+		\hline \\[-1.8ex] 
+		\textit{Note:}  & \multicolumn{3}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+	\end{tabular} 
+\end{table} 
+
+
+\hspace{5cm}
+\newpage
+\textbf{References}
+
+Gerber, A.S., Huber, G.A., Tucker, P.D., Cho, J.J., 2023. The Importance of Breaking Even: How Local and Aggregate Returns Make Politically Feasible Policies. Brit. J. Polit. Sci. 1–18. https://doi.org/10.1017/S0007123423000522
+
+\end{document}

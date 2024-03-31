@@ -25,7 +25,7 @@ pkgTest <- function(pkg){
 # ex: stringr
 # lapply(c("stringr"),  pkgTest)
 
-lapply(c("survival", "eha", "tidyverse", "ggfortify", "stargazer"),  pkgTest)
+lapply(c("survival", "eha", "tidyverse", "ggfortify", "stargazer", "MASS", "VGAM"),  pkgTest)
 
 #### Survival Analysis
 
